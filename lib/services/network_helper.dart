@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 class NetworkHelper{
   NetworkHelper({required this.url});
   final String url;
@@ -9,6 +10,11 @@ class NetworkHelper{
 
     http.Response response;
     response = await http.get(Uri.parse(url));
-    response.body;
+    if (response.statusCode == 200){
+      String data = response.body;
+      return jsonDecode(data);
+    } else{
+      print(response.statusCode);
+    }
   }
 }
